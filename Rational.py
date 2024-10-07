@@ -40,32 +40,49 @@ class Rational:
         print(self)
 
     def __add__(self, other):
-        if self.denomin == other.denomin:
-            self.numer += other.numer
+        if isinstance(other, Rational):
+            if self.denomin == other.denomin:
+                self.numer += other.numer
+            else:
+                self.numer = self.numer * other.denomin + other.numer * self.denomin
+                self.denomin *= other.denomin
         else:
-            self.numer = self.numer * other.denomin + other.numer * self.denomin
-            self.denomin *= other.denomin
+            self.numer += other * self.denomin
+        self.check()
         return self
 
     def __sub__(self, other):
-        if self.denomin == other.denomin:
-            self.numer -= other.numer
+        if isinstance(other, Rational):
+            if self.denomin == other.denomin:
+                self.numer -= other.numer
+            else:
+                self.numer = self.numer * other.denomin - other.numer * self.denomin
+                self.denomin *= other.denomin
         else:
-            self.numer = self.numer * other.denomin - other.numer * self.denomin
-            self.denomin *= other.denomin
+            self.numer -= other * self.denomin
+        self.check()
         return self
 
     def __pow__(self, power, modulo=None):
         self.numer **= power
         self.denomin **= power
+        self.check()
         return self
 
     def __mul__(self, other):
-        self.numer *= other.numer
-        self.denomin *= other.denomin
+        if isinstance(other, Rational):
+            self.numer *= other.numer
+            self.denomin *= other.denomin
+        else:
+            self.numer *= other
+        self.check()
         return self
 
     def __truediv__(self, other):
-        self.numer *= other.denomin
-        self.denomin *= other.numer
+        if isinstance(other, Rational):
+            self.numer *= other.denomin
+            self.denomin *= other.numer
+        else:
+            self.denomin *= other
+        self.check()
         return self
