@@ -1,8 +1,9 @@
 import math
+from tkinter.messagebox import showinfo, showerror
 
 
 class Rational:
-    def __init__(self, numer, denomin):
+    def __init__(self, numer, denomin=1):
         self.numer = numer
         self.denomin = denomin
         self.check()
@@ -10,7 +11,7 @@ class Rational:
     def check(self):
         #   0 в знаменателе
         if self.denomin == 0:
-            print('Wrong denominator')
+            showerror('Error:', 'Wrong denominator')
             self.numer = 0
             self.denomin = 0
             return self
